@@ -74,6 +74,56 @@
           </table>
         </div>
       </div>
+
+      <div class="card" v-if="submittedOrders.length">
+        <div class="card-header">
+          <h3 class="card-title">{{ t('orders.submittedOrders.title') }} ({{ submittedOrders.length }})</h3>
+        </div>
+        <div class="table-container">
+          <table class="orders-table">
+            <thead>
+              <tr>
+                <th class="col-order-number">{{ t('orders.submittedOrders.orderNumber') }}</th>
+                <th class="col-items">{{ t('orders.submittedOrders.items') }}</th>
+                <th class="col-value">{{ t('orders.submittedOrders.budget') }}</th>
+                <th class="col-value">{{ t('orders.submittedOrders.totalCost') }}</th>
+                <th class="col-status">{{ t('orders.submittedOrders.status') }}</th>
+                <th class="col-date">{{ t('orders.submittedOrders.createdDate') }}</th>
+                <th class="col-date">{{ t('orders.submittedOrders.leadTime') }}</th>
+                <th class="col-date">{{ t('orders.submittedOrders.expectedDelivery') }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="order in submittedOrders" :key="order.id">
+                <td class="col-order-number"><strong>{{ order.order_number }}</strong></td>
+                <td class="col-items">
+                  <details class="items-details">
+                    <summary class="items-summary">
+                      {{ t('orders.itemsCount', { count: order.items.length }) }}
+                    </summary>
+                    <div class="items-dropdown">
+                      <div v-for="item in order.items" :key="item.sku" class="item-entry">
+                        <span class="item-name">{{ translateProductName(item.item_name) }}</span>
+                        <span class="item-meta">{{ t('orders.quantity') }}: {{ item.quantity }} @ {{ currencySymbol }}{{ item.unit_cost }}</span>
+                      </div>
+                    </div>
+                  </details>
+                </td>
+                <td class="col-value">{{ currencySymbol }}{{ order.budget.toLocaleString() }}</td>
+                <td class="col-value"><strong>{{ currencySymbol }}{{ order.total_cost.toLocaleString() }}</strong></td>
+                <td class="col-status">
+                  <span :class="['badge', getOrderStatusClass(order.status)]">
+                    {{ t(`status.${order.status.toLowerCase()}`) }}
+                  </span>
+                </td>
+                <td class="col-date">{{ formatDate(order.created_date) }}</td>
+                <td class="col-date">{{ t('orders.submittedOrders.leadTimeDays', { days: order.lead_time_days }) }}</td>
+                <td class="col-date">{{ formatDate(order.expected_delivery) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -95,6 +145,7 @@ export default {
     const loading = ref(true)
     const error = ref(null)
     const orders = ref([])
+    const submittedOrders = ref([])
 
     // Use shared filters
     const {
@@ -129,6 +180,15 @@ export default {
       loadOrders()
     })
 
+    const loadSubmittedOrders = async () => {
+      try {
+        submittedOrders.value = await api.getRestockingOrders()
+      } catch (err) {
+        // Non-blocking: submitted orders section simply won't render if this fails
+        console.error('Failed to load submitted restocking orders:', err)
+      }
+    }
+
     const getOrdersByStatus = (status) => {
       return orders.value.filter(order => order.status === status)
     }
@@ -138,7 +198,8 @@ export default {
         'Delivered': 'success',
         'Shipped': 'info',
         'Processing': 'warning',
-        'Backordered': 'danger'
+        'Backordered': 'danger',
+        'Submitted': 'info'
       }
       return statusMap[status] || 'info'
     }
@@ -153,13 +214,17 @@ export default {
       })
     }
 
-    onMounted(loadOrders)
+    onMounted(() => {
+      loadOrders()
+      loadSubmittedOrders()
+    })
 
     return {
       t,
       loading,
       error,
       orders,
+      submittedOrders,
       getOrdersByStatus,
       getOrderStatusClass,
       formatDate,

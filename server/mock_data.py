@@ -35,5 +35,9 @@ recent_transactions = load_json_file('transactions.json')
 # Load purchase orders
 purchase_orders = load_json_file('purchase_orders.json')
 
+# Submitted restocking orders live only in memory for the process lifetime,
+# same "no database" philosophy as the rest of the app.
+restocking_orders = load_json_file('restocking_orders.json')
+
 # All data is now loaded from JSON files in the data/ directory
 # This allows for easier maintenance and updates of the sample data
