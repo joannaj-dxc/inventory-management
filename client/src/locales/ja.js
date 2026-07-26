@@ -6,8 +6,12 @@ export default {
     orders: '注文',
     finance: '財務',
     demandForecast: '需要予測',
+    restocking: '補充発注',
+    reports: 'レポート',
     companyName: '触媒コンポーネンツ',
-    subtitle: '在庫管理システム'
+    subtitle: '在庫管理システム',
+    expandSidebar: 'サイドバーを展開',
+    collapseSidebar: 'サイドバーを折りたたむ'
   },
 
   // Dashboard
@@ -126,6 +130,18 @@ export default {
       status: 'ステータス',
       expectedDelivery: '予定配達日',
       actualDelivery: '実際の配達日'
+    },
+    submittedOrders: {
+      title: '送信済み発注',
+      orderNumber: '発注番号',
+      items: '品目',
+      budget: '予算',
+      totalCost: '合計金額',
+      status: 'ステータス',
+      createdDate: '発注日',
+      leadTime: 'リードタイム',
+      leadTimeDays: '{days}日',
+      expectedDelivery: '予定納品日'
     }
   },
 
@@ -188,6 +204,40 @@ export default {
     }
   },
 
+  // Restocking
+  restocking: {
+    title: '補充発注',
+    description: '需要予測に基づき、予算内で補充すべき在庫品目を提案します',
+    budget: {
+      title: '補充予算'
+    },
+    summary: {
+      totalCost: '合計金額',
+      remaining: '残り予算',
+      itemCount: '提案品目数'
+    },
+    recommendations: {
+      title: '提案品目'
+    },
+    table: {
+      sku: 'SKU',
+      itemName: '品目名',
+      category: 'カテゴリ',
+      trend: 'トレンド',
+      stock: '在庫',
+      quantity: '提案数量',
+      unitCost: '単価',
+      lineTotal: '小計',
+      leadTime: 'リードタイム'
+    },
+    leadTimeDays: '{days}日',
+    placeOrder: '発注する',
+    placingOrder: '発注処理中...',
+    orderSuccess: '発注 {orderNumber} を送信しました。注文タブの「送信済み発注」セクションでご確認いただけます。',
+    orderError: '補充発注の送信に失敗しました。もう一度お試しください。',
+    noRecommendations: 'この予算では提案できる品目がありません。予算を増やしてお試しください。'
+  },
+
   // Filters
   filters: {
     timePeriod: '期間',
@@ -204,6 +254,7 @@ export default {
     shipped: '出荷済み',
     processing: '処理中',
     backordered: 'バックオーダー',
+    submitted: '送信済み',
     inStock: '在庫あり',
     lowStock: '在庫僅少',
     adequate: '適量'

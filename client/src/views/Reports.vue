@@ -324,19 +324,19 @@ export default {
 .card {
   background: white;
   border-radius: 12px;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
+  padding: var(--space-7);
+  margin-bottom: var(--space-7);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .card-header {
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-7);
 }
 
 .card-title {
   font-size: 1.25rem;
   font-weight: 600;
-  color: #0f172a;
+  color: var(--color-text);
   margin: 0;
 }
 
@@ -346,25 +346,25 @@ export default {
 }
 
 .reports-table th {
-  background: #f8fafc;
-  padding: 0.75rem;
+  background: var(--color-bg);
+  padding: var(--space-4);
   text-align: left;
   font-weight: 600;
-  color: #64748b;
-  border-bottom: 2px solid #e2e8f0;
+  color: var(--color-text-secondary);
+  border-bottom: 2px solid var(--color-border);
 }
 
 .reports-table td {
-  padding: 0.75rem;
-  border-bottom: 1px solid #e2e8f0;
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .reports-table tr:hover {
-  background: #f8fafc;
+  background: var(--color-bg);
 }
 
 .chart-container {
-  padding: 2rem 1rem;
+  padding: 2rem var(--space-5);
   min-height: 300px;
 }
 
@@ -373,7 +373,7 @@ export default {
   align-items: flex-end;
   justify-content: space-around;
   height: 250px;
-  gap: 0.5rem;
+  gap: var(--space-3);
 }
 
 .bar-wrapper {
@@ -400,48 +400,48 @@ export default {
 }
 
 .bar:hover {
-  background: linear-gradient(to top, #2563eb, #3b82f6);
+  background: linear-gradient(to top, var(--color-accent), #3b82f6);
 }
 
 .bar-label {
-  margin-top: 0.5rem;
+  margin-top: var(--space-3);
   font-size: 0.75rem;
-  color: #64748b;
+  color: var(--color-text-secondary);
   text-align: center;
   transform: rotate(-45deg);
   white-space: nowrap;
-  margin-top: 1.5rem;
+  margin-top: var(--space-7);
 }
 
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
-  margin-top: 1.5rem;
+  gap: var(--space-5);
+  margin-top: var(--space-7);
 }
 
 .stat-card {
   background: white;
   border-radius: 12px;
-  padding: 1.5rem;
+  padding: var(--space-7);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   border-left: 4px solid #3b82f6;
 }
 
 .stat-label {
   font-size: 0.875rem;
-  color: #64748b;
-  margin-bottom: 0.5rem;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-3);
 }
 
 .stat-value {
   font-size: 1.875rem;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--color-text);
 }
 
 .badge {
-  padding: 0.25rem 0.75rem;
+  padding: var(--space-1) var(--space-4);
   border-radius: 9999px;
   font-size: 0.875rem;
   font-weight: 500;
@@ -468,21 +468,21 @@ export default {
 }
 
 .negative-change {
-  color: #dc2626;
+  color: var(--color-danger);
   font-weight: 600;
 }
 
 .loading {
   text-align: center;
-  padding: 3rem;
-  color: #64748b;
+  padding: var(--space-8);
+  color: var(--color-text-secondary);
 }
 
 .error {
   background: #fee2e2;
   color: #991b1b;
-  padding: 1rem;
+  padding: var(--space-5);
   border-radius: 8px;
-  margin: 1rem 0;
+  margin: var(--space-5) 0;
 }
 </style>

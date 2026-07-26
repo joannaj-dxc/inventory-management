@@ -1,42 +1,19 @@
 <template>
   <div class="app">
-    <header class="top-nav">
-      <div class="nav-container">
-        <div class="logo">
-          <h1>{{ t('nav.companyName') }}</h1>
-          <span class="subtitle">{{ t('nav.subtitle') }}</span>
-        </div>
-        <nav class="nav-tabs">
-          <router-link to="/" :class="{ active: $route.path === '/' }">
-            {{ t('nav.overview') }}
-          </router-link>
-          <router-link to="/inventory" :class="{ active: $route.path === '/inventory' }">
-            {{ t('nav.inventory') }}
-          </router-link>
-          <router-link to="/orders" :class="{ active: $route.path === '/orders' }">
-            {{ t('nav.orders') }}
-          </router-link>
-          <router-link to="/spending" :class="{ active: $route.path === '/spending' }">
-            {{ t('nav.finance') }}
-          </router-link>
-          <router-link to="/demand" :class="{ active: $route.path === '/demand' }">
-            {{ t('nav.demandForecast') }}
-          </router-link>
-          <router-link to="/reports" :class="{ active: $route.path === '/reports' }">
-            Reports
-          </router-link>
-        </nav>
+    <Sidebar />
+    <div class="content-column" :class="{ 'sidebar-collapsed': isSidebarCollapsed }">
+      <div class="top-bar">
+        <FilterBar />
         <LanguageSwitcher />
         <ProfileMenu
           @show-profile-details="showProfileDetails = true"
           @show-tasks="showTasks = true"
         />
       </div>
-    </header>
-    <FilterBar />
-    <main class="main-content">
-      <router-view />
-    </main>
+      <main class="main-content">
+        <router-view />
+      </main>
+    </div>
 
     <ProfileDetailsModal
       :is-open="showProfileDetails"
@@ -59,11 +36,13 @@ import { ref, onMounted, computed } from 'vue'
 import { api } from './api'
 import { useAuth } from './composables/useAuth'
 import { useI18n } from './composables/useI18n'
+import { useSidebar } from './composables/useSidebar'
 import FilterBar from './components/FilterBar.vue'
 import ProfileMenu from './components/ProfileMenu.vue'
 import ProfileDetailsModal from './components/ProfileDetailsModal.vue'
 import TasksModal from './components/TasksModal.vue'
 import LanguageSwitcher from './components/LanguageSwitcher.vue'
+import Sidebar from './components/Sidebar.vue'
 
 export default {
   name: 'App',
@@ -72,11 +51,13 @@ export default {
     ProfileMenu,
     ProfileDetailsModal,
     TasksModal,
-    LanguageSwitcher
+    LanguageSwitcher,
+    Sidebar
   },
   setup() {
     const { currentUser } = useAuth()
     const { t } = useI18n()
+    const { isSidebarCollapsed } = useSidebar()
     const showProfileDetails = ref(false)
     const showTasks = ref(false)
     const apiTasks = ref([])
@@ -150,6 +131,7 @@ export default {
 
     return {
       t,
+      isSidebarCollapsed,
       showProfileDetails,
       showTasks,
       tasks,
@@ -162,6 +144,38 @@ export default {
 </script>
 
 <style>
+/* Design tokens: colors + spacing scale shared across global classes below.
+   Per-view scoped styles (Dashboard.vue etc.) still use raw literals for now -
+   that migration is a later stage of the sidebar redesign. */
+:root {
+  --color-text: #0f172a;
+  --color-text-secondary: #64748b;
+  --color-border: #e2e8f0;
+  --color-bg: #f8fafc;
+  --color-accent: #2563eb;
+  --color-accent-tint: #eff6ff;
+  --color-success: #059669;
+  --color-success-tint: #d1fae5;
+  --color-warning: #ea580c;
+  --color-warning-tint: #fed7aa;
+  --color-danger: #dc2626;
+  --color-danger-tint: #fecaca;
+  --color-info: #2563eb;
+  --color-info-tint: #dbeafe;
+
+  --sidebar-width: 250px;
+  --sidebar-width-collapsed: 72px;
+
+  --space-1: 0.25rem;
+  --space-2: 0.375rem;
+  --space-3: 0.5rem;
+  --space-4: 0.75rem;
+  --space-5: 1rem;
+  --space-6: 1.25rem;
+  --space-7: 1.5rem;
+  --space-8: 3rem;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -178,92 +192,54 @@ body {
 
 .app {
   display: flex;
+  min-height: 100vh;
+}
+
+/* content-column's margin-left matches Sidebar's width - the sidebar is position:fixed
+   (not a flex sibling that stretches), so the content column has to reserve that space
+   itself rather than relying on flexbox to lay them out side by side. Both this and
+   Sidebar.vue's .sidebar width read the same isSidebarCollapsed ref and transition in
+   sync, so the collapse animation never causes a layout jump. */
+.content-column {
+  flex: 1;
+  min-width: 0;
+  margin-left: var(--sidebar-width);
+  transition: margin-left 0.2s ease;
+  display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-.top-nav {
+.content-column.sidebar-collapsed {
+  margin-left: var(--sidebar-width-collapsed);
+}
+
+.top-bar {
   background: #ffffff;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid var(--color-border);
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
   position: sticky;
   top: 0;
   z-index: 100;
-}
-
-.nav-container {
-  max-width: 1600px;
-  margin: 0 auto;
   display: flex;
   align-items: center;
-  padding: 0 2rem;
-  height: 70px;
+  gap: var(--space-5);
+  padding: var(--space-4) var(--space-7);
+  /* FilterBar + LanguageSwitcher + ProfileMenu used to occupy two separate full-width
+     rows before the sidebar redesign. Now that they share one row inside a
+     content-column that's already 250px narrower (sidebar width), the combined content
+     no longer fits at common laptop widths (~1280px and below). Allow wrapping so
+     LanguageSwitcher/ProfileMenu drop to a second line instead of overflowing the
+     viewport horizontally. */
+  flex-wrap: wrap;
+  row-gap: var(--space-4);
 }
 
-.nav-container > .nav-tabs {
-  margin-left: auto;
-  margin-right: 1rem;
-}
-
-.nav-container > .language-switcher {
-  margin-right: 1rem;
-}
-
-.logo {
-  display: flex;
-  align-items: baseline;
-  gap: 0.75rem;
-}
-
-.logo h1 {
-  font-size: 1.375rem;
-  font-weight: 700;
-  color: #0f172a;
-  letter-spacing: -0.025em;
-}
-
-.subtitle {
-  font-size: 0.813rem;
-  color: #64748b;
-  font-weight: 400;
-  padding-left: 0.75rem;
-  border-left: 1px solid #e2e8f0;
-}
-
-.nav-tabs {
-  display: flex;
-  gap: 0.25rem;
-}
-
-.nav-tabs a {
-  padding: 0.625rem 1.25rem;
-  color: #64748b;
-  text-decoration: none;
-  font-weight: 500;
-  font-size: 0.938rem;
-  border-radius: 6px;
-  transition: all 0.2s ease;
-  position: relative;
-}
-
-.nav-tabs a:hover {
-  color: #0f172a;
-  background: #f1f5f9;
-}
-
-.nav-tabs a.active {
-  color: #2563eb;
-  background: #eff6ff;
-}
-
-.nav-tabs a.active::after {
-  content: '';
-  position: absolute;
-  bottom: -1px;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: #2563eb;
+/* FilterBar's root element (.filters-bar) is untouched/scoped in its own component -
+   this rule (from App.vue's global styles) makes it fill the remaining top-bar width
+   so LanguageSwitcher/ProfileMenu sit flush right, without editing FilterBar.vue itself */
+.top-bar > .filters-bar {
+  flex: 1;
 }
 
 .main-content {
@@ -275,34 +251,34 @@ body {
 }
 
 .page-header {
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-7);
 }
 
 .page-header h2 {
   font-size: 1.875rem;
   font-weight: 700;
-  color: #0f172a;
-  margin-bottom: 0.375rem;
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
   letter-spacing: -0.025em;
 }
 
 .page-header p {
-  color: #64748b;
+  color: var(--color-text-secondary);
   font-size: 0.938rem;
 }
 
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.25rem;
-  margin-bottom: 1.5rem;
+  gap: var(--space-6);
+  margin-bottom: var(--space-7);
 }
 
 .stat-card {
   background: white;
-  padding: 1.25rem;
+  padding: var(--space-6);
   border-radius: 10px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--color-border);
   transition: all 0.2s ease;
 }
 
@@ -312,58 +288,58 @@ body {
 }
 
 .stat-label {
-  color: #64748b;
+  color: var(--color-text-secondary);
   font-size: 0.875rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  margin-bottom: 0.625rem;
+  margin-bottom: var(--space-4);
 }
 
 .stat-value {
   font-size: 2.25rem;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--color-text);
   letter-spacing: -0.025em;
 }
 
 .stat-card.warning .stat-value {
-  color: #ea580c;
+  color: var(--color-warning);
 }
 
 .stat-card.success .stat-value {
-  color: #059669;
+  color: var(--color-success);
 }
 
 .stat-card.danger .stat-value {
-  color: #dc2626;
+  color: var(--color-danger);
 }
 
 .stat-card.info .stat-value {
-  color: #2563eb;
+  color: var(--color-info);
 }
 
 .card {
   background: white;
   border-radius: 10px;
-  padding: 1.25rem;
-  border: 1px solid #e2e8f0;
-  margin-bottom: 1.25rem;
+  padding: var(--space-6);
+  border: 1px solid var(--color-border);
+  margin-bottom: var(--space-6);
 }
 
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
-  padding-bottom: 0.875rem;
-  border-bottom: 1px solid #e2e8f0;
+  margin-bottom: var(--space-5);
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .card-title {
   font-size: 1.125rem;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--color-text);
   letter-spacing: -0.025em;
 }
 
@@ -377,14 +353,14 @@ table {
 }
 
 thead {
-  background: #f8fafc;
-  border-top: 1px solid #e2e8f0;
-  border-bottom: 1px solid #e2e8f0;
+  background: var(--color-bg);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
 }
 
 th {
   text-align: left;
-  padding: 0.5rem 0.75rem;
+  padding: var(--space-3) var(--space-4);
   font-weight: 600;
   color: #475569;
   font-size: 0.75rem;
@@ -393,7 +369,7 @@ th {
 }
 
 td {
-  padding: 0.5rem 0.75rem;
+  padding: var(--space-3) var(--space-4);
   border-top: 1px solid #f1f5f9;
   color: #334155;
   font-size: 0.875rem;
@@ -404,12 +380,12 @@ tbody tr {
 }
 
 tbody tr:hover {
-  background: #f8fafc;
+  background: var(--color-bg);
 }
 
 .badge {
   display: inline-block;
-  padding: 0.313rem 0.75rem;
+  padding: 0.313rem var(--space-4);
   border-radius: 6px;
   font-size: 0.75rem;
   font-weight: 600;
@@ -418,32 +394,32 @@ tbody tr:hover {
 }
 
 .badge.success {
-  background: #d1fae5;
+  background: var(--color-success-tint);
   color: #065f46;
 }
 
 .badge.warning {
-  background: #fed7aa;
+  background: var(--color-warning-tint);
   color: #92400e;
 }
 
 .badge.danger {
-  background: #fecaca;
+  background: var(--color-danger-tint);
   color: #991b1b;
 }
 
 .badge.info {
-  background: #dbeafe;
+  background: var(--color-info-tint);
   color: #1e40af;
 }
 
 .badge.increasing {
-  background: #d1fae5;
+  background: var(--color-success-tint);
   color: #065f46;
 }
 
 .badge.decreasing {
-  background: #fecaca;
+  background: var(--color-danger-tint);
   color: #991b1b;
 }
 
@@ -453,34 +429,34 @@ tbody tr:hover {
 }
 
 .badge.high {
-  background: #fecaca;
+  background: var(--color-danger-tint);
   color: #991b1b;
 }
 
 .badge.medium {
-  background: #fed7aa;
+  background: var(--color-warning-tint);
   color: #92400e;
 }
 
 .badge.low {
-  background: #dbeafe;
+  background: var(--color-info-tint);
   color: #1e40af;
 }
 
 .loading {
   text-align: center;
-  padding: 3rem;
-  color: #64748b;
+  padding: var(--space-8);
+  color: var(--color-text-secondary);
   font-size: 0.938rem;
 }
 
 .error {
   background: #fef2f2;
-  border: 1px solid #fecaca;
+  border: 1px solid var(--color-danger-tint);
   color: #991b1b;
-  padding: 1rem;
+  padding: var(--space-5);
   border-radius: 8px;
-  margin: 1rem 0;
+  margin: var(--space-5) 0;
   font-size: 0.938rem;
 }
 </style>

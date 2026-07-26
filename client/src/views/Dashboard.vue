@@ -731,16 +731,16 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-5);
 }
 
 .header-meta {
   font-size: 0.813rem;
-  color: #64748b;
+  color: var(--color-text-secondary);
 }
 
 .kpi-section {
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-7);
 }
 
 .section-title {
@@ -749,30 +749,30 @@ export default {
   color: #475569;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-5);
 }
 
 .kpi-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1rem;
+  gap: var(--space-5);
 }
 
 .kpi-card {
   background: white;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--color-border);
   border-radius: 10px;
-  padding: 1rem;
+  padding: var(--space-5);
 }
 
 .kpi-header {
-  margin-bottom: 0.75rem;
+  margin-bottom: var(--space-4);
 }
 
 .kpi-label {
   font-size: 0.813rem;
   font-weight: 600;
-  color: #64748b;
+  color: var(--color-text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.025em;
 }
@@ -780,15 +780,15 @@ export default {
 .kpi-value {
   font-size: 2rem;
   font-weight: 700;
-  color: #0f172a;
-  margin-bottom: 0.5rem;
+  color: var(--color-text);
+  margin-bottom: var(--space-3);
   letter-spacing: -0.025em;
 }
 
 .kpi-goal {
   font-size: 0.813rem;
-  color: #64748b;
-  margin-bottom: 0.75rem;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-4);
 }
 
 .kpi-progress-bar {
@@ -813,8 +813,8 @@ export default {
 .charts-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1.25rem;
-  margin-bottom: 1.5rem;
+  gap: var(--space-6);
+  margin-bottom: var(--space-7);
 }
 
 .chart-card.full-width {
@@ -822,14 +822,14 @@ export default {
 }
 
 .chart-content {
-  padding: 1rem;
+  padding: var(--space-5);
 }
 
 .donut-chart {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 3rem;
+  gap: var(--space-8);
 }
 
 .donut-svg {
@@ -840,7 +840,7 @@ export default {
 .donut-legend {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: var(--space-4);
 }
 
 .legend-item {
@@ -861,9 +861,9 @@ export default {
 .order-health-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
+  gap: var(--space-7);
   align-items: center;
-  padding: 1rem;
+  padding: var(--space-5);
   min-height: 240px;
 }
 
@@ -872,8 +872,8 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
-  padding: 0 1rem;
+  gap: var(--space-5);
+  padding: 0 var(--space-5);
 }
 
 .donut-svg-compact {
@@ -883,7 +883,7 @@ export default {
 
 .donut-center-label {
   font-size: 12px;
-  fill: #64748b;
+  fill: var(--color-text-secondary);
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -891,20 +891,20 @@ export default {
 
 .donut-center-value {
   font-size: 36px;
-  fill: #0f172a;
+  fill: var(--color-text);
   font-weight: 700;
 }
 
 .donut-legend-compact {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 0.625rem 1.25rem;
+  gap: 0.625rem var(--space-6);
 }
 
 .legend-item-compact {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-3);
   font-size: 0.875rem;
   color: #475569;
   font-weight: 500;
@@ -913,7 +913,7 @@ export default {
 .order-health-metrics {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: var(--space-6);
   justify-content: center;
   align-items: center;
 }
@@ -921,14 +921,14 @@ export default {
 .health-metric {
   display: flex;
   flex-direction: column;
-  gap: 0.375rem;
+  gap: var(--space-2);
   text-align: center;
   width: 100%;
 }
 
 .health-metric-label {
   font-size: 0.688rem;
-  color: #64748b;
+  color: var(--color-text-secondary);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -937,7 +937,7 @@ export default {
 .health-metric-value {
   font-size: 1.75rem;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--color-text);
   letter-spacing: -0.025em;
 }
 
@@ -956,14 +956,14 @@ export default {
 .horizontal-bar-chart {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  padding: 0 1rem;
+  gap: var(--space-7);
+  padding: 0 var(--space-5);
 }
 
 .h-bar-item {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: var(--space-5);
 }
 
 .h-bar-label {
@@ -978,7 +978,7 @@ export default {
 .h-bar-container {
   flex: 1;
   height: 32px;
-  background: #f8fafc;
+  background: var(--color-bg);
   border-radius: 6px;
   overflow: hidden;
 }
@@ -988,7 +988,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding-right: 0.75rem;
+  padding-right: var(--space-4);
   transition: width 0.6s ease;
 }
 
@@ -1000,7 +1000,7 @@ export default {
 
 .line-chart {
   display: flex;
-  gap: 1.5rem;
+  gap: var(--space-7);
   height: 280px;
 }
 
@@ -1008,10 +1008,10 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding-right: 1rem;
+  padding-right: var(--space-5);
   font-size: 0.75rem;
   color: #94a3b8;
-  border-right: 1px solid #e2e8f0;
+  border-right: 1px solid var(--color-border);
 }
 
 .line-chart-area {
@@ -1019,7 +1019,7 @@ export default {
   display: flex;
   align-items: flex-end;
   justify-content: space-around;
-  gap: 0.5rem;
+  gap: var(--space-3);
 }
 
 .line-bar-group {
@@ -1028,7 +1028,7 @@ export default {
   align-items: center;
   flex: 1;
   max-width: 80px;
-  gap: 0.5rem;
+  gap: var(--space-3);
 }
 
 .line-bar-wrapper {
@@ -1052,13 +1052,13 @@ export default {
 }
 
 .line-bar.empty-bar {
-  background: #e2e8f0;
+  background: var(--color-border);
   box-shadow: none;
   min-height: 4px;
 }
 
 .line-bar:hover {
-  background: #2563eb;
+  background: var(--color-accent);
   transform: scaleY(1.05);
 }
 
@@ -1070,7 +1070,7 @@ export default {
 .line-bar-label {
   font-size: 0.75rem;
   font-weight: 600;
-  color: #64748b;
+  color: var(--color-text-secondary);
   white-space: nowrap;
 }
 
@@ -1082,12 +1082,12 @@ export default {
 }
 
 .no-backlog {
-  padding: 3rem;
+  padding: var(--space-8);
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: var(--space-5);
 }
 
 .success-icon {
@@ -1109,7 +1109,7 @@ export default {
 }
 
 .clickable-row:hover {
-  background: #eff6ff !important;
+  background: var(--color-accent-tint) !important;
 }
 
 /* Tasks Card Styles */
@@ -1118,19 +1118,19 @@ export default {
 }
 
 .tasks-content {
-  padding: 1.5rem;
+  padding: var(--space-7);
 }
 
 .task-input-container {
   display: flex;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
 }
 
 .task-input {
   flex: 1;
-  padding: 0.75rem;
-  border: 2px solid #e2e8f0;
+  padding: var(--space-4);
+  border: 2px solid var(--color-border);
   border-radius: 8px;
   font-size: 0.95rem;
   transition: border-color 0.2s ease;
@@ -1142,7 +1142,7 @@ export default {
 }
 
 .task-add-btn {
-  padding: 0.75rem 1.5rem;
+  padding: var(--space-4) var(--space-7);
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   border: none;
@@ -1164,29 +1164,29 @@ export default {
 .no-tasks {
   text-align: center;
   padding: 2rem;
-  color: #64748b;
+  color: var(--color-text-secondary);
   font-style: italic;
 }
 
 .tasks-list {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--space-3);
 }
 
 .task-item {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem;
-  background: #f8fafc;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background: var(--color-bg);
   border-radius: 8px;
   border: 2px solid transparent;
   transition: all 0.2s ease;
 }
 
 .task-item:hover {
-  border-color: #e2e8f0;
+  border-color: var(--color-border);
   background: white;
 }
 
@@ -1210,7 +1210,7 @@ export default {
   flex: 1;
   cursor: pointer;
   user-select: none;
-  color: #0f172a;
+  color: var(--color-text);
   font-size: 0.95rem;
 }
 
@@ -1232,12 +1232,12 @@ export default {
 }
 
 .task-delete-btn:hover {
-  background: #dc2626;
+  background: var(--color-danger);
   transform: scale(1.1);
 }
 
 .po-button {
-  padding: 0.5rem 1rem;
+  padding: var(--space-3) var(--space-5);
   border: none;
   border-radius: 6px;
   font-size: 0.813rem;
@@ -1253,13 +1253,13 @@ export default {
 }
 
 .po-button.create:hover {
-  background: #2563eb;
+  background: var(--color-accent);
   transform: translateY(-1px);
   box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
 }
 
 .po-button.view {
-  background: #64748b;
+  background: var(--color-text-secondary);
   color: white;
 }
 

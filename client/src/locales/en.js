@@ -6,8 +6,12 @@ export default {
     orders: 'Orders',
     finance: 'Finance',
     demandForecast: 'Demand Forecast',
+    restocking: 'Restocking',
+    reports: 'Reports',
     companyName: 'Catalyst Components',
-    subtitle: 'Inventory Management System'
+    subtitle: 'Inventory Management System',
+    expandSidebar: 'Expand sidebar',
+    collapseSidebar: 'Collapse sidebar'
   },
 
   // Dashboard
@@ -126,6 +130,18 @@ export default {
       status: 'Status',
       expectedDelivery: 'Expected Delivery',
       actualDelivery: 'Actual Delivery'
+    },
+    submittedOrders: {
+      title: 'Submitted Orders',
+      orderNumber: 'Order Number',
+      items: 'Items',
+      budget: 'Budget',
+      totalCost: 'Total Cost',
+      status: 'Status',
+      createdDate: 'Order Date',
+      leadTime: 'Lead Time',
+      leadTimeDays: '{days} days',
+      expectedDelivery: 'Expected Delivery'
     }
   },
 
@@ -188,6 +204,40 @@ export default {
     }
   },
 
+  // Restocking
+  restocking: {
+    title: 'Restocking',
+    description: 'Get budget-based restocking recommendations from demand forecasts',
+    budget: {
+      title: 'Restocking Budget'
+    },
+    summary: {
+      totalCost: 'Total Cost',
+      remaining: 'Remaining Budget',
+      itemCount: 'Items Recommended'
+    },
+    recommendations: {
+      title: 'Recommended Items'
+    },
+    table: {
+      sku: 'SKU',
+      itemName: 'Item Name',
+      category: 'Category',
+      trend: 'Trend',
+      stock: 'Stock',
+      quantity: 'Recommended Qty',
+      unitCost: 'Unit Cost',
+      lineTotal: 'Line Total',
+      leadTime: 'Lead Time'
+    },
+    leadTimeDays: '{days} days',
+    placeOrder: 'Place Order',
+    placingOrder: 'Placing Order...',
+    orderSuccess: 'Order {orderNumber} submitted successfully! View it in the Submitted Orders section of the Orders tab.',
+    orderError: 'Failed to submit restocking order. Please try again.',
+    noRecommendations: 'No items can be recommended for this budget. Try increasing the budget.'
+  },
+
   // Filters
   filters: {
     timePeriod: 'Time Period',
@@ -204,6 +254,7 @@ export default {
     shipped: 'Shipped',
     processing: 'Processing',
     backordered: 'Backordered',
+    submitted: 'Submitted',
     inStock: 'In Stock',
     lowStock: 'Low Stock',
     adequate: 'Adequate'

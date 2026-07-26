@@ -226,15 +226,15 @@ export default {
 
 <style scoped>
 .page-header {
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-7);
 }
 
 .page-header h2 {
-  margin-bottom: 0.25rem;
+  margin-bottom: var(--space-1);
 }
 
 .page-header p {
-  color: #64748b;
+  color: var(--color-text-secondary);
   font-size: 0.875rem;
 }
 
@@ -242,15 +242,15 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 1.5rem;
-  padding: 1.25rem 1.5rem;
-  border-bottom: 1px solid #e2e8f0;
+  gap: var(--space-7);
+  padding: var(--space-6) var(--space-7);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .card-title {
   font-size: 1rem;
   font-weight: 600;
-  color: #0f172a;
+  color: var(--color-text);
   margin: 0;
 }
 
@@ -263,7 +263,7 @@ export default {
 
 .search-icon {
   position: absolute;
-  left: 0.75rem;
+  left: var(--space-4);
   width: 18px;
   height: 18px;
   color: #94a3b8;
@@ -272,12 +272,12 @@ export default {
 
 .search-input {
   width: 100%;
-  padding: 0.5rem 2.5rem 0.5rem 2.5rem;
+  padding: var(--space-3) 2.5rem var(--space-3) 2.5rem;
   border: 1px solid #cbd5e1;
   border-radius: 8px;
   font-size: 0.875rem;
-  color: #0f172a;
-  background: #f8fafc;
+  color: var(--color-text);
+  background: var(--color-bg);
   transition: all 0.2s;
 }
 
@@ -294,11 +294,11 @@ export default {
 
 .clear-search {
   position: absolute;
-  right: 0.5rem;
+  right: var(--space-3);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.25rem;
+  padding: var(--space-1);
   background: transparent;
   border: none;
   border-radius: 4px;
@@ -308,8 +308,8 @@ export default {
 }
 
 .clear-search:hover {
-  background: #e2e8f0;
-  color: #64748b;
+  background: var(--color-border);
+  color: var(--color-text-secondary);
 }
 
 .clear-search svg {
@@ -321,7 +321,7 @@ export default {
 .error {
   padding: 2rem;
   text-align: center;
-  color: #64748b;
+  color: var(--color-text-secondary);
 }
 
 .error {
@@ -334,6 +334,6 @@ export default {
 }
 
 .clickable-row:hover {
-  background: #eff6ff !important;
+  background: var(--color-accent-tint) !important;
 }
 </style>

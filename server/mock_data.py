@@ -14,7 +14,9 @@ DATA_DIR = os.path.join(BASE_DIR, 'data')
 def load_json_file(filename):
     """Load data from a JSON file in the data directory"""
     filepath = os.path.join(DATA_DIR, filename)
-    with open(filepath, 'r') as f:
+    # Explicit utf-8 avoids mis-decoding non-ASCII chars (e.g. "±") on platforms
+    # where the default locale encoding isn't utf-8 (e.g. Windows cp1252).
+    with open(filepath, 'r', encoding='utf-8') as f:
         return json.load(f)
 
 # Load all datasets from JSON files
@@ -34,6 +36,10 @@ recent_transactions = load_json_file('transactions.json')
 
 # Load purchase orders
 purchase_orders = load_json_file('purchase_orders.json')
+
+# Submitted restocking orders live only in memory for the process lifetime,
+# same "no database" philosophy as the rest of the app.
+restocking_orders = load_json_file('restocking_orders.json')
 
 # All data is now loaded from JSON files in the data/ directory
 # This allows for easier maintenance and updates of the sample data
