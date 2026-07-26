@@ -194,13 +194,13 @@ export default {
 
 <style scoped>
 .budget-card {
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-7);
 }
 
 .budget-control {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: var(--space-7);
 }
 
 .budget-slider {
@@ -209,7 +209,7 @@ export default {
   appearance: none;
   height: 6px;
   border-radius: 3px;
-  background: #e2e8f0;
+  background: var(--color-border);
   outline: none;
   cursor: pointer;
 }
@@ -220,7 +220,7 @@ export default {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: #2563eb;
+  background: var(--color-accent);
   cursor: pointer;
   border: 3px solid white;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
@@ -230,7 +230,7 @@ export default {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: #2563eb;
+  background: var(--color-accent);
   cursor: pointer;
   border: 3px solid white;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
@@ -239,7 +239,7 @@ export default {
 .budget-slider::-moz-range-track {
   height: 6px;
   border-radius: 3px;
-  background: #e2e8f0;
+  background: var(--color-border);
 }
 
 .budget-value {
@@ -247,31 +247,31 @@ export default {
   text-align: right;
   font-size: 1.5rem;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--color-text);
   letter-spacing: -0.025em;
 }
 
 .success-banner {
-  background: #d1fae5;
+  background: var(--color-success-tint);
   border: 1px solid #a7f3d0;
   color: #065f46;
-  padding: 1rem;
+  padding: var(--space-5);
   border-radius: 8px;
-  margin: 1rem 0;
+  margin: var(--space-5) 0;
   font-size: 0.938rem;
 }
 
 .no-recommendations {
   text-align: center;
   padding: 2rem;
-  color: #64748b;
+  color: var(--color-text-secondary);
   font-size: 0.938rem;
 }
 
 .btn-primary {
-  padding: 0.625rem 1.25rem;
-  background: #2563eb;
-  border: 1px solid #2563eb;
+  padding: 0.625rem var(--space-6);
+  background: var(--color-accent);
+  border: 1px solid var(--color-accent);
   border-radius: 8px;
   font-weight: 500;
   font-size: 0.875rem;
