@@ -1,51 +1,87 @@
 <template>
   <div class="inventory">
     <div class="page-header">
-      <h2>{{ t('inventory.title') }}</h2>
-      <p>{{ t('inventory.description') }}</p>
+      <h2>{{ t("inventory.title") }}</h2>
+      <p>{{ t("inventory.description") }}</p>
     </div>
 
-    <div v-if="loading" class="loading">{{ t('common.loading') }}</div>
+    <div v-if="loading" class="loading">{{ t("common.loading") }}</div>
     <div v-else-if="error" class="error">{{ error }}</div>
     <div v-else>
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">{{ t('inventory.stockLevels') }} ({{ filteredItems.length }} {{ t('inventory.skus') }})</h3>
-          <div class="search-box">
-            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
-            </svg>
-            <input
-              v-model="searchQuery"
-              type="text"
-              :placeholder="t('inventory.searchPlaceholder')"
-              class="search-input"
-            />
-            <button
-              v-if="searchQuery"
-              @click="searchQuery = ''"
-              class="clear-search"
-              :title="t('inventory.clearSearch')"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+          <h3 class="card-title">
+            {{ t("inventory.stockLevels") }} ({{ filteredItems.length }}
+            {{ t("inventory.skus") }})
+          </h3>
+          <div class="card-header-actions">
+            <button class="export-btn" @click="exportCsv">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+                  clip-rule="evenodd"
+                />
               </svg>
+              {{ t("inventory.exportCsv") }}
             </button>
+            <div class="search-box">
+              <svg
+                class="search-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <input
+                v-model="searchQuery"
+                type="text"
+                :placeholder="t('inventory.searchPlaceholder')"
+                class="search-input"
+              />
+              <button
+                v-if="searchQuery"
+                @click="searchQuery = ''"
+                class="clear-search"
+                :title="t('inventory.clearSearch')"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
         <div class="table-container">
           <table>
             <thead>
               <tr>
-                <th>{{ t('inventory.table.sku') }}</th>
-                <th>{{ t('inventory.table.itemName') }}</th>
-                <th>{{ t('inventory.table.category') }}</th>
-                <th>{{ t('inventory.table.quantityOnHand') }}</th>
-                <th>{{ t('inventory.table.reorderPoint') }}</th>
-                <th>{{ t('inventory.table.unitCost') }}</th>
-                <th>{{ t('inventory.table.totalValue') }}</th>
-                <th>{{ t('inventory.table.location') }}</th>
-                <th>{{ t('inventory.table.status') }}</th>
+                <th>{{ t("inventory.table.sku") }}</th>
+                <th>{{ t("inventory.table.itemName") }}</th>
+                <th>{{ t("inventory.table.category") }}</th>
+                <th>{{ t("inventory.table.quantityOnHand") }}</th>
+                <th>{{ t("inventory.table.reorderPoint") }}</th>
+                <th>{{ t("inventory.table.unitCost") }}</th>
+                <th>{{ t("inventory.table.totalValue") }}</th>
+                <th>{{ t("inventory.table.location") }}</th>
+                <th>{{ t("inventory.table.status") }}</th>
               </tr>
             </thead>
             <tbody>
@@ -55,13 +91,27 @@
                 class="clickable-row"
                 @click="showItemDetail(item)"
               >
-                <td><strong>{{ item.sku }}</strong></td>
+                <td>
+                  <strong>{{ item.sku }}</strong>
+                </td>
                 <td>{{ translateProductName(item.name) }}</td>
                 <td>{{ translateCategory(item.category) }}</td>
-                <td><strong>{{ item.quantity_on_hand }}</strong></td>
+                <td>
+                  <strong>{{ item.quantity_on_hand }}</strong>
+                </td>
                 <td>{{ item.reorder_point }}</td>
                 <td>{{ currencySymbol }}{{ item.unit_cost.toFixed(2) }}</td>
-                <td><strong>{{ currencySymbol }}{{ (item.quantity_on_hand * item.unit_cost).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) }}</strong></td>
+                <td>
+                  <strong
+                    >{{ currencySymbol
+                    }}{{
+                      (item.quantity_on_hand * item.unit_cost).toLocaleString(
+                        undefined,
+                        { minimumFractionDigits: 2, maximumFractionDigits: 2 },
+                      )
+                    }}</strong
+                  >
+                </td>
                 <td>{{ translateWarehouse(item.location) }}</td>
                 <td>
                   <span :class="['badge', getStockStatusClass(item)]">
@@ -84,124 +134,184 @@
 </template>
 
 <script>
-import { ref, onMounted, watch, computed } from 'vue'
-import { api } from '../api'
-import { useFilters } from '../composables/useFilters'
-import { useI18n } from '../composables/useI18n'
-import InventoryDetailModal from '../components/InventoryDetailModal.vue'
+import { ref, onMounted, watch, computed } from "vue";
+import { api } from "../api";
+import { useFilters } from "../composables/useFilters";
+import { useI18n } from "../composables/useI18n";
+import InventoryDetailModal from "../components/InventoryDetailModal.vue";
 
 export default {
-  name: 'Inventory',
+  name: "Inventory",
   components: {
-    InventoryDetailModal
+    InventoryDetailModal,
   },
   setup() {
-    const { t, currentCurrency, translateProductName, translateWarehouse } = useI18n()
+    const { t, currentCurrency, translateProductName, translateWarehouse } =
+      useI18n();
 
     const currencySymbol = computed(() => {
-      return currentCurrency.value === 'JPY' ? '¥' : '$'
-    })
+      return currentCurrency.value === "JPY" ? "¥" : "$";
+    });
 
-    const loading = ref(true)
-    const error = ref(null)
-    const items = ref([])
-    const searchQuery = ref('')
+    const loading = ref(true);
+    const error = ref(null);
+    const items = ref([]);
+    const searchQuery = ref("");
 
     // Modal state
-    const showItemModal = ref(false)
-    const selectedItem = ref(null)
+    const showItemModal = ref(false);
+    const selectedItem = ref(null);
 
     // Use shared filters
-    const { selectedLocation, selectedCategory, getCurrentFilters } = useFilters()
+    const { selectedLocation, selectedCategory, getCurrentFilters } =
+      useFilters();
 
     // Stock status order for sorting (using status keys)
-    const STATUS_ORDER = { 'lowStock': 0, 'adequate': 1, 'inStock': 2 }
+    const STATUS_ORDER = { lowStock: 0, adequate: 1, inStock: 2 };
 
     // Get stock status key (for sorting and translation)
     const getStockStatusKey = (item) => {
       if (item.quantity_on_hand <= item.reorder_point) {
-        return 'lowStock'
+        return "lowStock";
       } else if (item.quantity_on_hand <= item.reorder_point * 1.5) {
-        return 'adequate'
+        return "adequate";
       } else {
-        return 'inStock'
+        return "inStock";
       }
-    }
+    };
 
     // Computed property to filter items by search query and sort by stock status
     const filteredItems = computed(() => {
-      let filtered = items.value
+      let filtered = items.value;
 
       // Apply search filter if query exists
       if (searchQuery.value.trim()) {
-        const query = searchQuery.value.toLowerCase().trim()
-        filtered = filtered.filter(item =>
-          item.name.toLowerCase().includes(query)
-        )
+        const query = searchQuery.value.toLowerCase().trim();
+        filtered = filtered.filter((item) =>
+          item.name.toLowerCase().includes(query),
+        );
       }
 
       // Sort by stock status: Low Stock first, then Adequate, then In Stock
       // Always create a copy to avoid mutating the original array
       return filtered.slice().sort((a, b) => {
-        const statusA = getStockStatusKey(a)
-        const statusB = getStockStatusKey(b)
-        return STATUS_ORDER[statusA] - STATUS_ORDER[statusB]
-      })
-    })
+        const statusA = getStockStatusKey(a);
+        const statusB = getStockStatusKey(b);
+        return STATUS_ORDER[statusA] - STATUS_ORDER[statusB];
+      });
+    });
 
     const loadInventory = async () => {
       try {
-        loading.value = true
-        const filters = getCurrentFilters()
+        loading.value = true;
+        const filters = getCurrentFilters();
         // Inventory doesn't support month/status filters, only warehouse and category
         items.value = await api.getInventory({
           warehouse: filters.warehouse,
-          category: filters.category
-        })
+          category: filters.category,
+        });
       } catch (err) {
-        error.value = 'Failed to load inventory: ' + err.message
+        error.value = "Failed to load inventory: " + err.message;
       } finally {
-        loading.value = false
+        loading.value = false;
       }
-    }
+    };
 
     // Watch for filter changes and reload data
     watch([selectedLocation, selectedCategory], () => {
-      loadInventory()
-    })
+      loadInventory();
+    });
 
     const getStockStatus = (item) => {
-      const key = getStockStatusKey(item)
-      return t(`status.${key}`)
-    }
+      const key = getStockStatusKey(item);
+      return t(`status.${key}`);
+    };
 
     const getStockStatusClass = (item) => {
       if (item.quantity_on_hand <= item.reorder_point) {
-        return 'danger'
+        return "danger";
       } else if (item.quantity_on_hand <= item.reorder_point * 1.5) {
-        return 'warning'
+        return "warning";
       } else {
-        return 'success'
+        return "success";
       }
-    }
+    };
 
     const translateCategory = (category) => {
       const categoryMap = {
-        'Circuit Boards': t('categories.circuitBoards'),
-        'Sensors': t('categories.sensors'),
-        'Actuators': t('categories.actuators'),
-        'Controllers': t('categories.controllers'),
-        'Power Supplies': t('categories.powerSupplies')
-      }
-      return categoryMap[category] || category
-    }
+        "Circuit Boards": t("categories.circuitBoards"),
+        Sensors: t("categories.sensors"),
+        Actuators: t("categories.actuators"),
+        Controllers: t("categories.controllers"),
+        "Power Supplies": t("categories.powerSupplies"),
+      };
+      return categoryMap[category] || category;
+    };
 
     const showItemDetail = (item) => {
-      selectedItem.value = item
-      showItemModal.value = true
-    }
+      selectedItem.value = item;
+      showItemModal.value = true;
+    };
 
-    onMounted(loadInventory)
+    // English status labels used in the CSV regardless of the active locale
+    const CSV_STATUS_TEXT = {
+      lowStock: "Low Stock",
+      adequate: "Adequate",
+      inStock: "In Stock",
+    };
+
+    // Wrap a CSV field in double-quotes if it contains commas, quotes, or newlines;
+    // double any internal double-quote characters per RFC 4180
+    const escapeCsvField = (value) => {
+      const str = String(value ?? "");
+      if (str.includes(",") || str.includes('"') || str.includes("\n")) {
+        return '"' + str.replace(/"/g, '""') + '"';
+      }
+      return str;
+    };
+
+    const exportCsv = () => {
+      const headers = [
+        "SKU",
+        "Item Name",
+        "Category",
+        "Quantity on Hand",
+        "Reorder Point",
+        "Unit Cost",
+        "Total Value",
+        "Location",
+        "Status",
+      ];
+      const rows = filteredItems.value.map((item) => {
+        const totalValue = (item.quantity_on_hand * item.unit_cost).toFixed(2);
+        const status = CSV_STATUS_TEXT[getStockStatusKey(item)];
+        return [
+          item.sku,
+          item.name,
+          item.category,
+          item.quantity_on_hand,
+          item.reorder_point,
+          item.unit_cost.toFixed(2),
+          totalValue,
+          item.location,
+          status,
+        ]
+          .map(escapeCsvField)
+          .join(",");
+      });
+      const csvContent = [headers.map(escapeCsvField).join(","), ...rows].join(
+        "\n",
+      );
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "inventory-export.csv";
+      link.click();
+      URL.revokeObjectURL(url);
+    };
+
+    onMounted(loadInventory);
 
     return {
       t,
@@ -218,10 +328,11 @@ export default {
       showItemDetail,
       currencySymbol,
       translateProductName,
-      translateWarehouse
-    }
-  }
-}
+      translateWarehouse,
+      exportCsv,
+    };
+  },
+};
 </script>
 
 <style scoped>
@@ -252,6 +363,38 @@ export default {
   font-weight: 600;
   color: var(--color-text);
   margin: 0;
+}
+
+.card-header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.export-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--color-bg);
+  color: var(--color-text-secondary);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.export-btn:hover {
+  background: var(--color-border);
+  color: var(--color-text);
+}
+
+.export-btn svg {
+  width: 14px;
+  height: 14px;
 }
 
 .search-box {
