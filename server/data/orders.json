@@ -6180,5 +6180,24 @@
     "expected_delivery": "2025-11-19T12:30:00",
     "total_value": 9125.0,
     "actual_delivery": "2025-11-18T12:30:00"
+  },
+  {
+    "id": "733d18be-b49f-41c5-9550-a3a27de7c3a3",
+    "order_number": "REST-2025-1250",
+    "customer": "Internal Restocking",
+    "items": [
+      {
+        "sku": "PCB-001",
+        "name": "Single Layer PCB Assembly",
+        "quantity": 100,
+        "unit_price": 25.5
+      }
+    ],
+    "status": "Restocking",
+    "order_date": "2026-08-24T11:28:40.422406",
+    "expected_delivery": "2026-09-07T11:28:40.422406",
+    "total_value": 2550.0,
+    "warehouse": null,
+    "category": "Restocking"
   }
 ]
